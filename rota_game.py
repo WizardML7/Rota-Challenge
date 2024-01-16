@@ -117,10 +117,6 @@ def main():
                 game.print_board()
                 print(f'Player {winner} wins!')
                 break
-            elif game.is_board_full():
-                game.print_board()
-                print("It's a draw!")
-                break
             else:
                 game.switch_player_turn()
 
