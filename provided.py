@@ -43,6 +43,44 @@ class RotaGame:
 		self.board = "---------"
 		self.rota_api = RotaAPI
           
+	def place_piece(self, position):
+        # Check if the position is valid
+		if self.is_valid_position(position):
+            # Make the API call to place the piece
+			response = self.rota_api.place(position)
+            # Update the local board state
+			self.update_board(response['board'])
+			return response
+		else:
+			print("Invalid position for placing a piece.")
+
+	def move_piece(self, from_position, to_position):
+		# Check if the move is valid
+		if self.is_valid_move(from_position, to_position):
+			# Make the API call to move the piece
+			response = self.rota_api.move(from_position, to_position)
+			# Update the local board state
+			self.update_board(response['board'])
+			return response
+		else:
+			print("Invalid move.")
+
+	def is_valid_position(self, position):
+		# Add your validation logic here
+		return position in range(1, 10) and self.board[position - 1] == '-'
+
+	def is_valid_move(self, from_position, to_position):
+		# Add your validation logic here
+		return (
+			from_position in range(1, 10) and
+			to_position in range(1, 10) and
+			self.board[from_position - 1] != '-' and
+			self.board[to_position - 1] == '-'
+		)
+
+	def update_board(self, new_board):
+		self.board = new_board
+          
 		  
 	
 
